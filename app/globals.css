@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+/* =========================================================================
+   Cube Partner - design tokens
+   Source: Figma "Cube Partners" > Updated Cube Partners (node 1093:11401).
+   Colours are sampled from the exported frames. Tailwind v4 is configured in
+   CSS; every token below becomes a utility (bg-brand, text-ink, text-hero...).
+   ========================================================================= */
+
+@theme {
+  /* ---------- Colours ---------- */
+  --color-brand: #821bc3;            /* Cube purple: CTAs, eyebrows, accents, CTA band */
+  --color-brand-dark: #6a129f;       /* hover state of brand buttons */
+  --color-brand-light: #dbacf3;      /* second line of hero headings */
+  --color-lilac: #f6ebff;            /* Introducer card, "big picture" panel */
+  --color-lilac-line: #d2b2e8;       /* journey step rules */
+  --color-ghost: #f1e6fb;            /* oversized "06" numeral */
+  --color-ink: #11131f;              /* headings and body ink */
+  --color-muted: #6a6b75;            /* paragraphs, footer links */
+  --color-faint: #a4b0ba;            /* footer legal copy */
+  --color-page: #fcfbfe;             /* page, header and footer background */
+  --color-surface: #f5f4f9;          /* alternate section background */
+  --color-line: #dddde6;             /* borders and rules */
+  --color-white: #ffffff;
+
+  /* ---------- Font families (loaded in app/layout.tsx) ---------- */
+  --font-display: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-dm-sans), "DM Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* ---------- Type scale ----------
+     Display styles use Outfit, body styles DM Sans. Sizes are the 1440px
+     desktop values; components clamp them down on smaller screens. */
+  --text-hero: 5.5rem;                 /* 88px home H1 */
+  --text-hero--line-height: 1.02;
+  --text-hero--font-weight: 500;
+
+  --text-hero-sm: 5rem;                /* 80px inner-page H1 */
+  --text-hero-sm--line-height: 1.02;
+  --text-hero-sm--font-weight: 500;
+
+  --text-title: 3.625rem;              /* 58px section headings */
+  --text-title--line-height: 1.07;
+  --text-title--font-weight: 500;
+
+  --text-title-lg: 3.875rem;           /* 62px "Big ambitions", "One network." */
+  --text-title-lg--line-height: 1.05;
+  --text-title-lg--font-weight: 500;
+
+  --text-statement: 1.5rem;            /* 24px intro statement beside a heading */
+  --text-statement--line-height: 1.58;
+  --text-statement--font-weight: 400;
+
+  --text-numeral: 3rem;                /* 48px journey step numbers */
+  --text-numeral--line-height: 1;
+  --text-numeral--font-weight: 500;
+
+  --text-card: 1.375rem;               /* 22px card titles */
+  --text-card--line-height: 1.3;
+  --text-card--font-weight: 500;
+
+  --text-intro: 1.0625rem;             /* 17px hero lead */
+  --text-intro--line-height: 1.65;
+
+  --text-copy: 1rem;                   /* 16px section intros */
+  --text-copy--line-height: 1.75;
+
+  --text-eyebrow: 0.625rem;            /* 10px section labels */
+  --text-eyebrow--line-height: 1.3;
+  --text-eyebrow--letter-spacing: 0.14em;
+  --text-eyebrow--font-weight: 700;
+
+  --text-nav: 0.6875rem;               /* 11px nav links */
+  --text-nav--line-height: 1.5;
+  --text-nav--letter-spacing: 0.2em;
+  --text-nav--font-weight: 600;
+
+  --text-button: 0.8125rem;            /* 13px button labels */
+  --text-button--line-height: 1.3;
+  --text-button--letter-spacing: 0.18em;
+  --text-button--font-weight: 700;
+
+  /* ---------- Layout ---------- */
+  --container-site: 1440px;
+  --spacing-header: 4.8125rem;         /* 77px sticky header */
+
+  /* ---------- Effects ---------- */
+  --shadow-card: 0 1px 2px rgb(17 19 31 / 0.04), 0 18px 40px -24px rgb(17 19 31 / 0.22);
+  --shadow-brand: 0 22px 48px -22px rgb(130 27 195 / 0.55);
+
+  /* ---------- Motion ---------- */
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-menu-in: menu-in 0.25s ease-out both;
+  --animate-hero-zoom: hero-zoom 1.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-panel-in: panel-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-spin-slow: spin 24s linear infinite;
+
+  @keyframes menu-in {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes hero-zoom {
+    from { transform: scale(1.06); }
+    to { transform: scale(1); }
+  }
+  @keyframes panel-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: light; /* light-only design */
+  }
+
+  body {
+    background-color: var(--color-page);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+  }
+}
+
+/* ---------- Hero entrance ----------
+   Children of .hero-stagger rise in one after another on first paint. */
+.hero-stagger > * {
+  opacity: 0;
+  animation: panel-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.hero-stagger > *:nth-child(1) { animation-delay: 0.1s; }
+.hero-stagger > *:nth-child(2) { animation-delay: 0.2s; }
+.hero-stagger > *:nth-child(3) { animation-delay: 0.35s; }
+.hero-stagger > *:nth-child(4) { animation-delay: 0.5s; }
+
+/* ---------- Scroll reveal ----------
+   Applied by components/ui/Reveal.tsx. The root layout carries a <noscript>
+   override so content is never hidden without JavaScript. */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Map ----------
+   Muted basemap so the brand pin stands out, as in the design. */
+.office-map .leaflet-tile-pane {
+  filter: grayscale(0.55) contrast(0.95);
+}
+.office-map .leaflet-control-attribution {
+  font-size: 10px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .hero-stagger > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: none;
+  }
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -22,18 +22,17 @@ export const schemeLinks: NavItem[] = [
 ];
 
 // Sister brands in the "Our Network" menu, footer and network band.
-// Replace the hrefs with the live sites when they are known.
 export const networkSites = [
   {
     name: "Cube Accountants",
     text: "Expert accounting support for businesses and individuals.",
     logo: "/images/cube-accountants-red.svg",
-    href: "https://cubeaccountants.com",
+    href: "https://www.cubeaccountants.com",
   },
   {
     name: "Cube Academy",
     text: "Learning and development for the next generation of professionals.",
     logo: "/images/cube-academy-blue.svg",
-    href: "#",
+    href: "https://www.cubeacademy.co.uk",
   },
 ];
